@@ -10,15 +10,30 @@ Individual tags can be accessed as attributes of the custom resource, see the `O
 If you update the tags on an existing stack this resource will return the old tags because CloudFormation does not detect that the resource has changed.
 You can force a change by adding a dummy property to the stack, e.g. `ForceUpdate: 1`.
 
-## Installation
+## Manual Installation (testing only)
 
-TODO: create a CloudFormation template so this can be deployed as a Stackset across multiple AWS accounts in an organisation.
+Create a Python lambda called `AwsCfTags` from [`aws_cf_tags.py`](./aws_cf_tags.py) with the default role, then add the `cloudformation:DescribeStacks` permission.
 
-Currently you must manually create a Python lambda called `aws_cf_tags` from [`aws_cf_tags.py`](./aws_cf_tags_lambda/aws_cf_tags.py) with the default role, then add the `cloudformation:DescribeStacks` permission.
+## Automated Installation
+
+Build a CloudFormation template containing the custom resource by running
+
+```
+./build_deploy_cf.py > deploy-cf-aws-cf-tags.yml
+```
+
+Deploy the template to your AWS account:
+
+```
+aws cloudformation deploy --stack-name aws-cf-tags --template-file deploy-cf-aws-cf-tags.yml \
+  --capabilities CAPABILITY_NAMED_IAM
+```
+
+Or to multiple accounts in the AWS organisation by deploying `deploy-cf-aws-cf-tags.yml` as a StackSet.
 
 ## Example
 
-Deploy the example stack:
+Deploy the example stack [`example-cf.yml`](./example-cf.yml):
 
 ```
 aws cloudformation deploy --stack-name aws-cf-test --template-file example-cf.yml \

@@ -1,0 +1,39 @@
+AWSTemplateFormatVersion: 2010-09-09
+Resources:
+  AwsCfTagsRole:
+    Type: AWS::IAM::Role
+    Properties:
+      RoleName: !Sub AwsCfTags-role-${AWS::Region}
+      ManagedPolicyArns:
+        - arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole
+      Policies:
+        - PolicyName: cf-describestacks
+          PolicyDocument:
+            Version: 2012-10-17
+            Statement:
+              - Effect: Allow
+                Action: cloudformation:DescribeStacks
+                Resource: "*"
+      AssumeRolePolicyDocument:
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service: lambda.amazonaws.com
+            Action: sts:AssumeRole
+  AwsCfTagsCustomResource:
+    Type: AWS::Lambda::Function
+    Properties:
+      FunctionName: AwsCfTags
+      Role: !GetAtt AwsCfTagsRole.Arn
+      Runtime: python3.8
+      Handler: index.lambda_handler
+      Code:
+        ZipFile: |
+          # aws_cf_tags.py
+
+  # CustomResourceParameter:
+  #   Type: AWS::SSM::Parameter
+  #   Properties:
+  #     Name: /cf-custom-resources/AwsCfTags
+  #     Type: String
+  #     Value: !GetAtt AwsCfTagsCustomResource.Arn

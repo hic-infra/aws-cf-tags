@@ -2,10 +2,10 @@ AWSTemplateFormatVersion: 2010-09-09
 
 Resources:
   CloudFormationTags:
-    Type: Custom::aws_cf_tags
+    Type: Custom::AwsCfTags
     # Version: '1.0'
     Properties:
-      ServiceToken: !Sub arn:aws:lambda:eu-west-2:${AWS::AccountId}:function:aws_cf_tags
+      ServiceToken: !Sub arn:aws:lambda:eu-west-2:${AWS::AccountId}:function:AwsCfTags
 
 Outputs:
   TagAaa:
