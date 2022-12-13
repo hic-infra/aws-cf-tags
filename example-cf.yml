@@ -1,0 +1,21 @@
+AWSTemplateFormatVersion: 2010-09-09
+
+Resources:
+  CloudFormationTags:
+    Type: Custom::aws_cf_tags
+    # Version: '1.0'
+    Properties:
+      ServiceToken: !Sub arn:aws:lambda:eu-west-2:${AWS::AccountId}:function:aws_cf_tags
+
+Outputs:
+  TagAaa:
+    Description: CloudFormation stack tag aaa
+    Value: !GetAtt CloudFormationTags.aaa
+  TagBbb:
+    Description: CloudFormation stack tag bbb
+    Value: !GetAtt CloudFormationTags.bbb
+  TagCcc:
+    Description: CloudFormation stack tag ccc:ddd
+    Value: !GetAtt
+      - CloudFormationTags
+      - "ccc:ddd"
