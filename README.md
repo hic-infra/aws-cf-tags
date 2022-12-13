@@ -1,5 +1,7 @@
 # AWS Cloudformation Custom Resource tag fetcher
 
+[![CI](https://github.com/hic-infra/aws-cf-tags/actions/workflows/ci.yml/badge.svg)](https://github.com/hic-infra/aws-cf-tags/actions/workflows/ci.yml)
+
 A custom AWS CloudFormation Resource that returns the tags applied to the current CloudFormation stack.
 
 This is useful if you want to see the tags applied when the current stack was deployed, since this isn't available in the CloudFormation template itself.
@@ -52,3 +54,7 @@ CloudFormation stack tags       TagAaa  123
 CloudFormation stack tags       TagBbb  Whatever
 CloudFormation stack tags       TagCcc  sdf
 ```
+
+## Testing
+
+TODO: Add pytest tests
